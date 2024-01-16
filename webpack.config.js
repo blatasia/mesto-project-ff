@@ -47,7 +47,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html'
+      template: path.resolve(__dirname, './src/index.html')
     }),
     new CleanWebpackPlugin({
       cleanStaleWebpackAssets: false,  // Не удалять файлы, не участвующие в текущей сборке
