@@ -1,12 +1,10 @@
 export const openModal = (modalEl) => {
   modalEl.classList.add("popup_is-opened");
-  console.log("open");
   document.addEventListener("keydown", escPress);
 };
 
 export const closeModal = (modalEl) => {
   modalEl.classList.remove("popup_is-opened");
-  console.log("close");
   document.removeEventListener("keydown", escPress);
 };
 
