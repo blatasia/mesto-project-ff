@@ -10,9 +10,9 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'main.js',
-    publicPath: '/',
+    publicPath: '',
   },
-  mode: 'development',
+  mode: 'production',
   devServer: {
     static: path.resolve(__dirname, './dist'),
     open: true,
@@ -20,21 +20,18 @@ module.exports = {
     port: 8080
   },
   module: {
-    rules: [
-      {
+    rules: [{
         test: /\.js$/,
         use: 'babel-loader',
         exclude: '/node_modules/'
       },
       {
-        test: /\.(png|svg|jpeg|jpg|gif|woff(2)?|eot|ttf|otf)$/,
+        test: /\.(png|svg|jpg|gif|woff(2)?|eot|ttf|otf)$/,
         type: 'asset/resource',
       },
       {
         test: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
+        use: [MiniCssExtractPlugin.loader, {
             loader: 'css-loader',
             options: {
               importLoaders: 1
@@ -47,13 +44,9 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, './src/index.html')
+      template: './src/index.html'
     }),
-    new CleanWebpackPlugin({
-      cleanStaleWebpackAssets: false,  // Не удалять файлы, не участвующие в текущей сборке
-    }),
-    new MiniCssExtractPlugin({
-      filename: 'main.css',
-    }),
+    new CleanWebpackPlugin(),
+    new MiniCssExtractPlugin(),
   ]
 }

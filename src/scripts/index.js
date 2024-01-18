@@ -6,12 +6,12 @@ const editModal = document.querySelector(".popup_type_edit");
 const modalBtnClose = document.querySelectorAll(".popup__close");
 const outputName = document.querySelector(".profile__title");
 const outputJob = document.querySelector(".profile__description");
-const formElement = document.querySelector('form[name="edit-profile"]');
-const nameInput = formElement.querySelector(".popup__input_type_name");
-const jobInput = formElement.querySelector(".popup__input_type_description");
-const formElementPlace = document.querySelector('form[name="new-place"]');
-const placeNameInput = formElementPlace.querySelector(".popup__input_type_card-name");
-const placeImgInput = formElementPlace.querySelector(".popup__input_type_url");
+const formEditProfile = document.querySelector('form[name="edit-profile"]');
+const nameInput = formEditProfile.querySelector(".popup__input_type_name");
+const jobInput = formEditProfile.querySelector(".popup__input_type_description");
+const formAddPlace = document.querySelector('form[name="new-place"]');
+const placeNameInput = formAddPlace.querySelector(".popup__input_type_card-name");
+const placeImgInput = formAddPlace.querySelector(".popup__input_type_url");
 const imgModal = document.querySelector(".popup_type_image");
 const modalImgCaption = imgModal.querySelector(".popup__caption");
 const modalImg = imgModal.querySelector(".popup__image");
@@ -56,7 +56,7 @@ editBtn.addEventListener("click", () => {
   openModal(editModal);
 });
 
-const handleFormSubmit = (evt) => {
+const handleFormEditProfileSubmit = (evt) => {
   evt.preventDefault();
   const nameValue = nameInput.value;
   const jobValue = jobInput.value;
@@ -65,11 +65,11 @@ const handleFormSubmit = (evt) => {
   closeModal(editModal);
 };
 
-formElement.addEventListener("submit", handleFormSubmit);
+formEditProfile.addEventListener("submit", handleFormEditProfileSubmit);
 
 addBtn.addEventListener("click", () => openModal(addModal));
 
-function handleCardFormSubmit(evt, placeNameInput, placeImgInput) {
+function handleCardFormSubmit(evt) {
   evt.preventDefault();
   const cardNameValue = placeNameInput.value;
   const cardImgValue = placeImgInput.value;
@@ -82,9 +82,9 @@ function handleCardFormSubmit(evt, placeNameInput, placeImgInput) {
   );
   placesList.prepend(newCard);
   closeModal(addModal);
-  formElementPlace.reset();
+  formAddPlace.reset();
 }
 
-formElementPlace.addEventListener("submit", (evt) => {
+formAddPlace.addEventListener("submit", (evt) => {
   handleCardFormSubmit(evt, placeNameInput, placeImgInput);
 });
