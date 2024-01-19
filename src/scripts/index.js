@@ -1,4 +1,3 @@
-//DOM-el & const
 const popups = document.querySelectorAll(".popup");
 const editBtn = document.querySelector(".profile__edit-button");
 const addBtn = document.querySelector(".profile__add-button");
@@ -8,9 +7,13 @@ const outputName = document.querySelector(".profile__title");
 const outputJob = document.querySelector(".profile__description");
 const formEditProfile = document.querySelector('form[name="edit-profile"]');
 const nameInput = formEditProfile.querySelector(".popup__input_type_name");
-const jobInput = formEditProfile.querySelector(".popup__input_type_description");
+const jobInput = formEditProfile.querySelector(
+  ".popup__input_type_description"
+);
 const formAddPlace = document.querySelector('form[name="new-place"]');
-const placeNameInput = formAddPlace.querySelector(".popup__input_type_card-name");
+const placeNameInput = formAddPlace.querySelector(
+  ".popup__input_type_card-name"
+);
 const placeImgInput = formAddPlace.querySelector(".popup__input_type_url");
 const imgModal = document.querySelector(".popup_type_image");
 const modalImgCaption = imgModal.querySelector(".popup__caption");
@@ -20,13 +23,9 @@ const addModal = document.querySelector(".popup_type_new-card");
 
 import { initialCards } from "./cards.js";
 import { addCard, delCard, like } from "./card.js";
-import {
-  openModal,
-  closeModal,
-  closeOverlay,
-} from "./modal.js";
+import { openModal, closeModal, closeOverlay } from "./modal.js";
 
-popups.forEach(modal => modal.addEventListener('click', closeOverlay));
+popups.forEach((modal) => modal.addEventListener("click", closeOverlay));
 
 const imgModalOpen = (link, name) => {
   openModal(imgModal);

@@ -13,7 +13,7 @@ export const escPress = (evt) => {
     const openedModal = document.querySelector(".popup_is-opened");
     if (openedModal) {
       closeModal(openedModal);
-    };
+    }
   }
 };
 
