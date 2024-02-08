@@ -51,16 +51,30 @@
               type="text"
               name="name"
               class="popup__input popup__input_type_name"
+              id="edit_input_name"
               placeholder="Имя"
               required
+              minlength="2" 
+              maxlength="40" 
+              pattern="^[a-zA-Zа-яА-ЯёЁ\s\-]+$"
+              data-error-message-empty="Вы пропустили это поле"
+              data-error-message-pattern="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
             />
+            <span class="form__input-error edit_input_name-error"></span>
             <input
               type="text"
               name="description"
               class="popup__input popup__input_type_description"
+              id="edit_input_job"
               placeholder="Занятие"
               required
+              minlength="2"
+              maxlength="200"
+              pattern="^[a-zA-Zа-яА-ЯёЁ\s\-]+$"
+              data-error-message-empty="Вы пропустили это поле"
+              data-error-message-pattern="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
             />
+            <span class="form__input-error edit_input_job-error"></span>
             <button type="submit" class="button popup__button">
               Сохранить
             </button>
@@ -77,16 +91,48 @@
               type="text"
               name="place-name"
               class="popup__input popup__input_type_card-name"
+              id = "add_card_input_name"
               placeholder="Название"
               required
+              minlength="2"
+              maxlength="30"
+              pattern = "[a-zA-Zа-яА-ЯёЁ\s\-]+"
+              data-error-message-empty="Вы пропустили это поле"
+              data-error-message-pattern="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
             />
+            <span class="form__input-error add_card_input_name-error"></span>
             <input
               type="url"
               name="link"
               class="popup__input popup__input_type_url"
+              id="add_card_input_url"
               placeholder="Ссылка на картинку"
               required
+              data-error-message-empty="Введите адрес сайта"
             />
+            <span class="form__input-error add_card_input_url-error"></span>
+            <button type="submit" class="button popup__button">
+              Сохранить
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="popup popup_type_avatar">
+        <div class="popup__content">
+          <button type="button" class="popup__close"></button>
+          <h3 class="popup__title">Обновить аватар</h3>
+          <form class="popup__form" name="new-avatar">
+            <input
+              type="url"
+              name="place-avatar"
+              class="popup__input popup__input_type_card-avatar"
+              id = "add_avatar_input_link"
+              placeholder="Ссылка на картинку"
+              required
+              data-error-message-empty="Вы пропустили это поле"
+            />
+            <span class="form__input-error add_avatar_input_link-error"></span>
             <button type="submit" class="button popup__button">
               Сохранить
             </button>
@@ -109,7 +155,8 @@
         <button type="button" class="card__delete-button"></button>
         <div class="card__description">
           <h2 class="card__title"></h2>
-          <button type="button" class="card__like-button"></button>
+          <div class="card__like"><button type="button" class="card__like-button"></button>
+          <span class="card__like-count"></span></div>
         </div>
       </li>
     </template>
