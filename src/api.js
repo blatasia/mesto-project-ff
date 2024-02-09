@@ -22,7 +22,7 @@ export const getCardsData = () => {
     headers: {
       authorization: fetchConfig.headers.authorization,
     },
-  }).then((res) => resCheck(res));
+  }).then(resCheck);
 };
 
 //add card to serv
@@ -39,7 +39,7 @@ export const postCardsData = (cardName, cardLink) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(cardData),
-  }).then((res) => resCheck(res));
+  }).then(resCheck);
 };
 
 //getting users from serv
@@ -49,7 +49,7 @@ export const getUserData = () => {
     headers: {
       authorization: fetchConfig.headers.authorization,
     },
-  }).then((res) => resCheck(res));
+  }).then(resCheck);
 };
 
 //user data,go to form jail
@@ -66,7 +66,7 @@ export const patchUserData = (userName, userAbout) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(userData),
-  }).then((res) => resCheck(res));
+  }).then(resCheck);
 };
 
 //like card
@@ -76,7 +76,7 @@ export const likePut = (cardId) => {
     headers: {
       authorization: fetchConfig.headers.authorization,
     },
-  }).then((res) => resCheck(res));
+  }).then(resCheck);
 };
 
 //del card
@@ -98,7 +98,7 @@ export const likeDel = (cardId) => {
     headers: {
       authorization: fetchConfig.headers.authorization,
     },
-  }).then((res) => resCheck(res));
+  }).then(resCheck);
 };
 
 // avatar edit func
@@ -112,5 +112,5 @@ export const avatarPatch = (avatarUrl) => {
     body: JSON.stringify({
       avatar: avatarUrl,
     }),
-  }).then((res) => resCheck(res));
+  }).then(resCheck);
 };

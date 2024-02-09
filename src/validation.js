@@ -3,7 +3,6 @@ const showInputError = (formElement, inputElement, errorMessage, config) => {
   inputElement.classList.add(config.inputErrorClass);
   errorElement.textContent = errorMessage;
   errorElement.classList.add(config.errorClass);
-  console.log("show input error");
 };
 
 const hideInputError = (formElement, inputElement, config) => {
@@ -11,16 +10,9 @@ const hideInputError = (formElement, inputElement, config) => {
   inputElement.classList.remove(config.inputErrorClass);
   errorElement.textContent = "";
   errorElement.classList.remove(config.errorClass);
-  console.log("hide input error");
 };
 
 export const checkInputValidity = (formElement, inputElement, config) => {
-  if (inputElement.validity.valueMissing) {
-    inputElement.setCustomValidity(inputElement.dataset.errorMessageEmpty);
-  } else {
-    inputElement.setCustomValidity("");
-  }
-
   if (inputElement.validity.patternMismatch) {
     inputElement.setCustomValidity(inputElement.dataset.errorMessagePattern);
   } else {
@@ -53,7 +45,6 @@ const toggleButtonState = (inputList, buttonElement, config) => {
     buttonElement.classList.remove(config.inactiveButtonClass);
     buttonElement.disabled = false;
   }
-  console.log("Togg button");
 };
 
 const setEventListeners = (formElement, config) => {
@@ -85,11 +76,10 @@ export const clearValidation = (formElement, config) => {
     formElement.querySelectorAll(config.inputSelector)
   );
   const buttonElement = formElement.querySelector(config.submitButtonSelector);
+  formElement.reset();
   toggleButtonState(inputList, buttonElement, config);
 
   inputList.forEach((inputElement) => {
     hideInputError(formElement, inputElement, config);
-    inputElement.setCustomValidity("");
   });
-  console.log("Valid clear");
 };

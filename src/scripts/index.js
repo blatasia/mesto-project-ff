@@ -32,8 +32,6 @@ const profileAvatar = document.querySelector(".profile__image");
 const profilePopupAvatar = document.querySelector(".popup_type_avatar");
 //MORE MODAL
 const addModal = document.querySelector(".popup_type_new-card");
-//data for local cards
-// import { initialCards } from "./cards.js";
 
 //modals import
 import { openModal, closeModal, closeOverlay } from "./modal.js";
@@ -60,16 +58,8 @@ import {
 } from "../api.js";
 
 //better ux loading btn
-const loadingBtn = (config, isLoading) => {
-  const btn = document.querySelectorAll(config.submitButtonSelector);
-  btn.forEach((btn) => {
-    const defaultText = btn.textContent;
-    if (isLoading) {
-      btn.textContent = "Сохранение...";
-    } else {
-      btn.textContent = defaultText;
-    }
-  });
+const setLoadingBtn = (button, isLoading) => {
+  button.textContent = isLoading ? "Сохранение..." : "Сохранить";
 };
 
 //Overlay close listener
@@ -98,11 +88,10 @@ Promise.all([getUserData(), getCardsData()])
 
 const appendCard = (cardData, userData) => {
   const cardElement = addCard(
-    cardData._id || cardData.id,
     cardData,
     userData,
     delCard,
-    imgModalOpen,
+    openImgModal,
     like
   );
 
@@ -112,10 +101,10 @@ const appendCard = (cardData, userData) => {
 //MODALS
 //edit profile MODAL
 editBtn.addEventListener("click", () => {
+  clearValidation(formEditProfile, config);
   nameInput.value = outputName.textContent;
   jobInput.value = outputJob.textContent;
   openModal(editModal);
-  clearValidation(formEditProfile, config);
 });
 
 const handleFormEditProfileSubmit = (evt) => {
@@ -123,19 +112,22 @@ const handleFormEditProfileSubmit = (evt) => {
   const nameValue = nameInput.value;
   const jobValue = jobInput.value;
 
-  loadingBtn(config, true);
+  const submitBtn = evt.target.querySelector(config.submitButtonSelector);
+  setLoadingBtn(submitBtn, true);
 
   patchUserData(nameValue, jobValue)
     .then((updateUserData) => {
       outputName.textContent = updateUserData.name;
       outputJob.textContent = updateUserData.about;
       closeModal(editModal);
-      console.log("youve updated profile");
     })
     .catch((error) => {
       console.error(
         `update profile(handleFormEditProfileSubmit/patchUserData): ${error}`
       );
+    })
+    .finally(() => {
+      setLoadingBtn(submitBtn, false);
     });
 };
 
@@ -145,8 +137,6 @@ formEditProfile.addEventListener("submit", handleFormEditProfileSubmit);
 addBtn.addEventListener("click", () => {
   openModal(addModal);
   clearValidation(formAddPlace, config);
-  placeNameInput.value = "";
-  placeImgInput.value = "";
 });
 
 function handleCardFormSubmit(evt) {
@@ -154,33 +144,27 @@ function handleCardFormSubmit(evt) {
   const cardNameValue = placeNameInput.value;
   const cardImgValue = placeImgInput.value;
 
-  loadingBtn(config, true);
+  const submitBtn = evt.target.querySelector(config.submitButtonSelector);
+  setLoadingBtn(submitBtn, true);
 
-  getUserData()
-    .then((userData) => {
-      return postCardsData(cardNameValue, cardImgValue)
-        .then((data) => {
-          console.log("Data of appended card", data);
-          appendCard(data, userData);
-          closeModal(addModal);
-          formAddPlace.reset();
-          clearValidation(formAddPlace, config);
-        })
-        .catch((error) => {
-          console.error(
-            `error in postcardsdata in handlecardformsubmit: ${error}`
-          );
-        });
+  postCardsData(cardNameValue, cardImgValue)
+    .then((data) => {
+      appendCard(data, data.owner);
+      closeModal(addModal);
+      clearValidation(formAddPlace, config);
     })
     .catch((error) => {
-      console.error(`error in get user data: ${error}`);
+      console.error(`error in postcardsdata in handlecardformsubmit: ${error}`);
+    })
+    .finally(() => {
+      setLoadingBtn(submitBtn, false);
     });
 }
 
 formAddPlace.addEventListener("submit", handleCardFormSubmit);
 
 //open img MODAL
-const imgModalOpen = (link, name) => {
+const openImgModal = (link, name) => {
   if (link && name) {
     openModal(imgModal);
     modalImg.src = link;
@@ -193,7 +177,6 @@ const imgModalOpen = (link, name) => {
 
 //open avatar modal
 profileAvatar.addEventListener("click", () => {
-  console.log("avatar modal open");
   openModal(profilePopupAvatar);
   formEditAvatar.reset();
   clearValidation(formEditAvatar, config);
@@ -205,14 +188,19 @@ formEditAvatar.addEventListener("submit", (evt) => {
 
   const newAvatarUrl = avatarInput.value;
 
+  const submitBtn = evt.target.querySelector(config.submitButtonSelector);
+  setLoadingBtn(submitBtn, true);
+
   avatarPatch(newAvatarUrl)
     .then((data) => {
-      console.log("avatar updated", data);
       profileAvatar.style.backgroundImage = `url(${newAvatarUrl})`;
       closeModal(profilePopupAvatar);
     })
     .catch((error) => {
       console.log("error in avatar update", error);
+    })
+    .finally(() => {
+      setLoadingBtn(submitBtn, false);
     });
 });
 
